@@ -1,0 +1,219 @@
+﻿@using BakalarskaPrace1.Models
+@model LocationM
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+    <script>
+
+        function toogledays(y) {
+            var x = document.getElementById(y);
+            var place = document.getElementById("locationh");
+            var but_cit = document.getElementById("button_city");
+            var but_geo = document.getElementById("button_geo");
+            if (y == 'City') {
+                but_cit.style.backgroundColor = "#F9F871";
+                but_cit.style.color = "#303b4a";
+                but_geo.attributeStyleMap.clear();
+                var second = document.getElementById('Geolocation');
+                if (second.style.display === "grid") {
+                    second.style.display = "none";
+                   
+
+                }
+                document.getElementById("hidde").style.display = "none";
+            }
+            else {
+                but_geo.style.backgroundColor = "#F9F871";
+                but_geo.style.color = "#303b4a";
+                but_cit.attributeStyleMap.clear();
+                var second = document.getElementById('City');
+                if (second.style.display === "grid") {
+                    second.style.display = "none";
+                    
+                }
+                document.getElementById("hidde").style.display = "block";
+            }
+
+            if (x.style.display === "none") {
+                x.style.display = "grid";
+               // x.style.backgroundColor = "#F9F871";
+                //x.style.color = "#303b4a";
+                place.style.display = "flex";
+            } else {
+                x.style.display = "none";
+                place.style.display = "none";
+            }
+            place.appendChild(x);
+        }
+        function getLocation() {
+            console.log('imhere');
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        function success(pos) {
+            var crd = pos.coords;
+
+            var lan = document.getElementById("latitude");
+            var lon = document.getElementById("longitude");
+            lan.value = crd.latitude;
+            lon.value = crd.longitude;
+
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        function onlo() {
+            var watopen = "@ViewBag.watopen";
+
+            if (watopen == "1") {
+                toogledays('City');
+            }
+            else if (watopen == "2") {
+                toogledays('Geolocation');
+            }
+        }
+    </script>
+</head>
+<body onload="onlo()">
+    <div class="container">
+        <h1>Select Location:</h1>
+        <div class="center">
+            <div class="panel_class">
+                <button onclick=" toogledays('City')" id="button_city">City name</button>
+
+                <button onclick=" toogledays('Geolocation')"  id="button_geo">Geographic Coords</button>
+
+
+            </div>
+        </div>
+        <div id="locationh" style="display: none;">
+        </div>
+        <div id='City' style="display: none;">
+
+            <div class="Warning2">@ViewBag.mistakes</div>
+
+            @using (Html.BeginForm())
+            {<div class="form">
+                    <div class="form_leva">
+                        @Html.LabelFor(x => x.mesto)
+                    </div>
+                    <div class="form_prava">
+                        @Html.TextBoxFor(x => x.mesto)
+                    </div>
+                    <div class="tool">
+                        ?
+                        <span class="tooltext">City name without diacritic</span>
+                    </div>
+                    <div class="form_leva">
+                        @Html.LabelFor(x => x.ISO)
+                    </div>
+                    <div class="form_prava">@Html.TextBoxFor(x => x.ISO)</div>
+                    <div class="tool">
+                        ?
+                        <span class="tooltext">ISO of state</span>
+                    </div>
+                </div>
+                <button type="submit">Ukazat</button>
+            }
+
+        </div>
+        <div id="Geolocation" style="display: none;">
+            <div class="Warning1">@ViewBag.mistakes</div>
+
+            @using (Html.BeginForm())
+            {
+                <div class="form2">
+
+                    <div class="form_leva">@Html.LabelFor(x => x.latitude)</div>
+                    <div class="form_prava">@Html.TextBoxFor(x => x.latitude)</div>
+                    <div class="form_leva"> @Html.LabelFor(x => x.longitude)</div>
+                    <div class="form_prava"> @Html.TextBoxFor(x => x.longitude)</div>
+                </div>
+
+                <button id="auto_vypln" onclick="getLocation()" type="button">Get my current location</button>
+                <br>
+                <button id="ukaz" type="submit">Show!</button>
+            }
+
+        </div>
+        <div id="hidde">
+            <div class="graph_container">
+                <div id="map" class="map"></div>
+                <div id='coords'></div>
+
+
+            </div>
+        </div>
+    </div>
+        <script type="text/javascript">
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([49, 45, 18.36]),
+                    zoom: 4
+                })
+            });
+            var markers = new ol.layer.Vector({
+                source: new ol.source.Vector(),
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 1],
+                        src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Simpleicons_Places_map-marker-point.svg/16px-Simpleicons_Places_map-marker-point.svg.png",
+                    })
+                })
+            });
+            map.addLayer(markers);
+
+            map.on('click', function (evt) {
+                console.info(evt.pixel);
+                console.info(map.getPixelFromCoordinate(evt.coordinate));
+                console.info(ol.proj.toLonLat(evt.coordinate));
+                var coords = ol.proj.toLonLat(evt.coordinate);
+                var lat = coords[1];
+                var lon = coords[0];
+                var lan = document.getElementById("latitude");
+                var lonn = document.getElementById("longitude");
+                lan.value = lat;
+                lonn.value = lon;
+                //var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+                //document.getElementById('coords').innerHTML = locTxt;
+                var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([lon, lat])));
+                map.removeLayer(markers);
+                markers = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Simpleicons_Places_map-marker-point.svg/16px-Simpleicons_Places_map-marker-point.svg.png",
+                        })
+                    })
+                });
+                map.addLayer(markers)
+                markers.getSource().addFeature(marker);
+
+            });
+            document.getElementById("hidde").style.display = "none";
+        </script>
+        
+</body>
+    
+</html>

@@ -1,0 +1,144 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+    var lant =0;
+    var llo = 0
+    var sc;
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.changeName = function () {
+                sc = $scope;
+                getLocation();
+            }
+        });
+        app.directive('legacyDirective', function () {
+            return {
+                link: function (scope, element, attrs) {
+                    $(element).undisable(scope.$eval(attrs.legacyDirective));
+                }
+            }
+        });
+    
+    function getLocation() {
+        console.log('imhere');
+        navigator.geolocation.getCurrentPosition(success, error, options);
+       
+    }
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    function success(pos) {
+        var crd = pos.coords;
+
+        var lan = document.getElementById("latitude");
+        var lon = document.getElementById("longitude");
+        lan.value = crd.latitude;
+        lant = crd.latitude;
+        llo = crd.longitude;
+        lon.value = crd.longitude;
+        sc.l = crd.latitude;
+        sc.lon = crd.longitude;
+        sc.$apply();
+
+    }
+
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    function prepareFrame() {
+        var ifrm = document.createElement('iframe');
+        var link = document.getElementById("ApiLink");
+        var frame = document.getElementById("frame");
+        ifrm.setAttribute('src', link.value.split("net")[1]);
+        frame.innerHTML = "";
+        frame.appendChild(ifrm);
+
+    }
+
+    function undisable() {
+        var butt = getElementById("showbutton").disabled;
+        console.log(butt);
+    }
+    
+</script>
+<div class="container">
+    <h1 onload="loaded()">API Usage</h1>
+    <div id="ang-app" ng-app="myApp" ng-controller="myCtrl">
+        <div class="graph_container">
+            <div class="center">
+                <div class="Api_deleni">
+                    <p>
+                        <input type="radio" value="3HRS" name="gender" ng-model="type"> 3Hours
+                        <input type="radio" value="7DYS" name="gender" ng-model="type"> 7days
+                        <input type="radio" value="WEEK" name="gender" ng-model="type"> Week
+                    </p>
+                </div>
+            </div>
+
+            <div id="app">
+
+                <div class="Api_deleni">
+                    <div>
+                        <label for="location">Langtitude</label><br>
+                        <input type="text" id="latitude" ng-model="l"><br>
+                        <label for="location">Longitude</label><br>
+                        <input type="text" id="longitude" name="longtitude" ng-model="lon">
+                        <br>
+                        <br><input type="button" class="button" value="Actual Position" ng-click="changeName()"><br>
+                        <br>
+                    </div>
+                    <div>
+                        <label for="fname">Panel tilt:</label><br>
+                        <input type="text" id="tilt" name="tilt" ng-model="tilt"><br>
+                        <label for="lname">Panel azimuth:</label><br>
+                        <input type="text" id="azimuth" name="azimuth" ng-model="azimuth"><br><br>
+                        <label for="lname">Panel output(W):</label><br>
+                        <input type="text" id="output" name="output" ng-model="output"><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center"><div class="Api_link_container">Link:<input class="center" id="ApiLink" type="text" value="bpsolar.azurewebsites.net/api/{{type}}?panel_tilt={{tilt}}&panel_azimuth={{azimuth}}&wattpeek={{output}}&longitude={{lon}}&latitude={{l}}"></div></div>
+        <div class="Api_Json_Container">
+            <div ng-if="l!=undefined && lon!=undefined && tilt!=undefined && azimuth!=undefined && output!=undefined" class="graph_container">
+
+                <div ng-if="tilt<0 || tilt>90" class="Warning">
+                    Wrong Tilt
+                </div>
+                <div ng-if="azimuth<-180 || azimuth>180" class="Warning">
+                    Wrong Azimuth
+                </div>
+                <div ng-if="output<0" class="Warning">
+                    Wrong Output
+                </div>
+                <div ng-if="l<-90 || l>90 || lon<-180 || lon>180" class="Warning">
+                    wrong location
+                </div>
+                <div ng-if="tilt>0 && tilt<90">
+                    <div ng-if="azimuth>-180 && azimuth<180">
+                        <div ng-if="output>0">
+                            <div ng-if="l>-90 && l<90 && lon>-180 && lon<180">
+                                <div ng-if="type!=none">
+                                    <div legacy-directive></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="columer">
+                <button id="showbutton" onclick="prepareFrame()" ng-disabled="!(l!=undefined && lon!=undefined && tilt!=undefined && azimuth!=undefined && output!=undefined && (tilt>0 && tilt<90) &&(azimuth>-180 && azimuth<180) && output>0 && (l>-90 && l<90 && lon>-180 && lon<180) && type!=none)">Show Json</button><br>
+                <div id="frame"> </div>
+            </div>
+        </div>
+    </div>
+</div>

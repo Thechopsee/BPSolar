@@ -1,0 +1,101 @@
+﻿
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+
+
+
+        google.charts.setOnLoadCallback(function () {
+            drawChart();
+            drawChart2();
+        });
+        function drawChart(datain, where, haxis, vaxis, name) {
+            var data = google.visualization.arrayToDataTable(JSON.parse('@Html.Raw(@ViewBag.alldays)'));
+            
+            var options = {
+                curveType: 'line',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: "Hour"
+                },
+                vAxis: {
+                    title: "W/H"
+                },
+
+
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart3'));
+            chart.draw(data, options);
+        }
+        function drawChart2(datain, where, haxis, vaxis, name) {
+            var data = google.visualization.arrayToDataTable(JSON.parse('@Html.Raw(@ViewBag.graf2_data)'));
+            data.addColumn({ type: 'string', role: 'annotation' });
+            for (var y = 0, maxrows = data.getNumberOfRows(); y < maxrows; y++) {
+                if (data.getValue(y, 2) == 0) {
+                    if (y == 6) {
+                        data.setValue(6, 3, 'Today');
+                        break;
+                    }
+                    data.setValue(y - 1, 3, 'Today');
+                    break;
+                }
+                
+            }
+            var options = {
+                curveType: 'line',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: "Days"
+                },
+                vAxis: {
+                    title: "W/H"
+                },
+
+
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Comparation</h1>
+        <div class="graph_container">
+            <p>
+                All comparisons are made for the power plant located at coordinates N 49.754683 E018.61115, which is oriented at an angle of -10 to the south, the inclination of the panels is 66 degrees and the maximum power is 95 Wp.
+            </p>
+        </div>
+        <h3 class="hcomp">Comparison of forecasts for today</h3>
+        <div class="graph_container">
+            <div id="chart3" class="graph_comp"></div>
+            <div class="center">
+                <ul class="ul_text">
+                    <li>Comparison of predictions made by this system and predictions provided by forecast.solar Restful API.</li>
+                </ul>  
+            </div>
+        </div>
+        <h3 class="hcomp">Comparison of forecast and real power output for this week</h3>
+        <div class="graph_container">
+            <div id="chart" class="graph_comp"></div>
+            <div class="center">
+                <ul class="ul_text">
+                    <li>
+                        The forecast is always created at the beginning of the week and the actual data data is read during the week.
+                    </li>
+                    <li>
+                        The "Today" mark indicates the current day of the week.
+                    </li>
+                </ul>
+             </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

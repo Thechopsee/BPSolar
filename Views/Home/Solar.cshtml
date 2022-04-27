@@ -1,0 +1,347 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+@using BakalarskaPrace1.Models
+@model LocationM
+
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        //google.charts.setOnLoadCallback(drawChart);
+
+        var foracast7day = JSON.parse('@ViewBag.Data');
+        var day1 = JSON.parse('@ViewBag.day1');
+        var day2 = JSON.parse('@ViewBag.day2');
+        var day3 = JSON.parse('@ViewBag.day3');
+        var day4 = JSON.parse('@ViewBag.day4');
+        var day5 = JSON.parse('@ViewBag.day5');
+        var day6 = JSON.parse('@ViewBag.day6');
+        var day7 = JSON.parse('@ViewBag.day7');
+        var hours3 = JSON.parse('@ViewBag.hours3');
+
+        var alldays = JSON.parse('@ViewBag.alldays')
+        var days = new Array(day1, day2, day3,day4,day5,day6,day7);
+        var weather7day = JSON.parse('@ViewBag.Weather7day');
+        var global_day = 0;
+        var dates = JSON.parse('@ViewBag.dates');
+        var condition_cloud = parseFloat(@ViewBag.cloud);
+        var condition_rain = parseFloat(@ViewBag.rain);
+        function countStav() {
+            var final_stav=""
+            if (condition_cloud < 35) {
+                final_stav += "sun";
+            }
+            else if (condition_cloud < 65 && condition_cloud > 35) {
+                final_stav += "suncloud";
+            }
+            else {
+                final_stav += "cloud";
+            }
+            if (condition_rain > 10) {
+                final_stav += "rain";
+            }
+            var elemnt = document.getElementById('weatherpick');
+            console.log(final_stav)
+            elemnt.src = "../galery/" + final_stav + ".png";
+
+        }
+        var colors =['#3366cc','#dc3912','#ff9900','#109618','#990099','#0099c6','#dd4477']
+        function drawChart(datain,where,haxis,vaxis,name,colornum) {
+          var data = google.visualization.arrayToDataTable(datain);
+
+            if (colornum == 99) {
+                var options = {
+                    curveType: 'line',
+                    legend: { position: 'bottom' },
+                    hAxis: {
+                        title: vaxis
+                    },
+                    vAxis: {
+                        title: haxis
+                    },
+
+                };
+            }
+            else {
+                var options = {
+                    curveType: 'line',
+                    legend: { position: 'bottom' },
+                    hAxis: {
+                        title: vaxis
+                    },
+                    vAxis: {
+                        title: haxis
+                    },
+                    colors: [colors[colornum]]
+                };
+            }
+
+
+          var chart = new google.visualization.LineChart(document.getElementById(where));
+          chart.draw(data, options);
+        }
+        function redrawGraph(i,day)
+        {
+            console.log(i);
+            console.log(days[i]);
+            var elemnt_old = document.getElementById(global_day + "");
+            elemnt_old.attributeStyleMap.clear()
+            var elemnt_all = document.getElementById('allbtn');
+            elemnt_all.attributeStyleMap.clear()
+
+            global_day = i;
+            var elemnt = document.getElementById(i + "");
+            elemnt.style.backgroundColor = "#F9F871";
+            elemnt.style.color = "#303b4a";
+            drawChart(days[i], "curve_chart2", "kW/h", "Hours", day + " Day Prediction", i);
+            
+            var elemnt_weather = document.getElementById('dayweathercloud');
+            elemnt_weather.innerHTML = "" + weather7day[i].clouds;
+            elemnt_weather = document.getElementById('dayweathersun');
+            elemnt_weather.innerHTML = "" + weather7day[i].sun;
+            elemnt_weather = document.getElementById('dayweatherrain');
+            elemnt_weather.innerHTML = "" + weather7day[i].rain;
+            //elemnt_weather.innerHTML = weather7day[i].clouds+","+ weather7day[i].rain+","+ weather7day[i].sun
+        }
+        function redrawall() {
+            var elemnt_old = document.getElementById(global_day + "");
+            elemnt_old.attributeStyleMap.clear()
+            var elemnt = document.getElementById('allbtn');
+            elemnt.style.backgroundColor = "#F9F871";
+            elemnt.style.color = "#303b4a";
+            drawChart(alldays, "curve_chart2", "kW/h", "Hours", "", 99);
+            var elemnt_weather = document.getElementById('dayweather');
+            var elemnt_weather = document.getElementById('dayweathercloud');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumercloud";
+            elemnt_weather = document.getElementById('dayweathersun');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumersun";
+            elemnt_weather = document.getElementById('dayweatherrain');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumerrain";
+        }
+        function updateDateContainer()
+        {
+            var container = document.getElementById("date_container");
+            var div = document.createElement('button');
+            div.id = 'allbtn';
+            div.innerHTML = 'All';
+            div.onclick = function () { redrawall() };
+            div.style.backgroundColor = "#F9F871";
+            div.style.color = "#303b4a";
+            container.appendChild(div);
+            for (var i = 0; i < 7; i++)
+            {
+                var div = document.createElement('button');
+                div.id = i;
+                div.innerHTML = dates[i];
+                div.onclick = function () { redrawGraph(this.id,dates[i]+" "); };
+                container.appendChild(div);
+            }
+            drawChart(alldays, "curve_chart2", "kW/h", "Hours", "",99);
+            drawChart(foracast7day, "curve_chart", "kW/h", "Day","",0);
+            drawChart(hours3, "curve_chart3", "kW/h", "Hours", "",0);
+            var h1 = document.getElementById("hours1");
+            h1.appendChild(document.createTextNode(hours3[1][0]));
+            var h2 = document.getElementById("hours2");
+            h2.appendChild(document.createTextNode(hours3[2][0]));
+            var h3 = document.getElementById("hours3");
+            h3.appendChild(document.createTextNode(hours3[3][0]));
+            var elemnt_weather = document.getElementById('dayweathercloud');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumercloud";
+            elemnt_weather = document.getElementById('dayweathersun');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumersun";
+            elemnt_weather = document.getElementById('dayweatherrain');
+            elemnt_weather.innerHTML = "@ViewBag.weekprumerrain";
+        }
+
+        function getLocation() {
+            console.log('imhere');
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        function success(pos) {
+            var crd = pos.coords;
+
+            var lan = document.getElementById("latitude");
+            var lon = document.getElementById("longitude");
+            lan.value = crd.latitude;
+            lon.value = crd.longitude;
+
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        window.onresize = doALoadOfStuff;
+
+        function doALoadOfStuff() {
+            if (global_day == 0) {
+                drawChart(alldays, "curve_chart2", "kW/h", "Hours", "All Day Prediction",99);
+            }
+            else {
+                drawChart(days[global_day], "curve_chart2", "kW/h", "Hours", " Day Prediction", global_day);
+            }
+            drawChart(foracast7day, "curve_chart", "kW/h", "Day", "7day Avarage Prediction",0);
+            drawChart(hours3, "curve_chart3", "kW/h", "Hours", "3hours Prediction",0);
+
+        }
+
+        //console.log(weather7day[0].cloud[0]);
+    </script>
+</head>
+
+<body onload="updateDateContainer()">
+    <div class="container">
+        <br>
+        <h1> Solar production forecast</h1>
+        <br>
+        <div id="double_info_box">
+            <div class="info_box">
+                <h3>Prediction made for...</h3>
+                <div class="info_block">
+                    <div class="info_left">Location:</div><div class="info_right">@ViewBag.city</div>
+                    <div class="info_left">Panel Tilt:</div> <div class="info_right">@ViewBag.tilt</div>
+                    <div class="info_left">Panel Azimuth:</div> <div class="info_right">@ViewBag.azimut</div>
+                    <div class="info_left">FVE Wattpeak:</div> <div class="info_right">@ViewBag.wattpeak</div>
+                </div>
+            </div>
+            <div class="info_box">
+                <h3>Current Weather</h3>
+                <img src="" id="weatherpick" height="30">
+                <div>@ViewBag.conditions</div>
+                <div class="info_block">
+                    <div class="info_left">Cloud coverage:</div><div class="info_right">@ViewBag.cloud %</div>
+                    <div class="info_left">Chance of rain:</div> <div class="info_right">@ViewBag.rain %</div>
+                    <div class="info_left">Solar energy:</div> <div class="info_right">@ViewBag.solar W/m2</div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h2>7 day average forecast</h2>
+        <div class="graph_container">
+            <div id="curve_chartlabel"></div>
+            <div id="curve_chart"></div>
+            <div>
+                <li>Forecast of production averages for the following week.</li>
+                <h3>Weather forecast</h3>
+                <div class="box_3">
+                    <div>
+                        Cloud coverage: @ViewBag.weekprumercloud %
+                    </div>
+
+                    <div>
+                        Chance of rain: @ViewBag.weekprumerrain %
+                    </div>
+                    <div>
+                        Solar energy: @ViewBag.weekprumersun W/m2
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <h2>Hour by Hour forecast for 7 days</h2>
+        <div class="graph_container">
+
+            <br />
+            <!--<div class="center"><button onclick=" toogledays('date_container')">Select Day</button></div>-->
+            <br />
+            <div id="date_container" class="spacer"></div>
+            <div id="curve_chart2label"></div>
+            <div id="curve_chart2"></div>
+            <div>
+                <li>Hourly production forecast day by day for the following week</li>
+                <h3>Weather forecast</h3>
+                <div class="box_3">
+                    <div class="dva_prvky">
+                        Cloud coverage:
+                        <div id="dayweathercloud">
+
+                        </div>
+                        %
+                    </div>
+
+                    <div class="dva_prvky">
+                        Chance of rain:
+                        <div id="dayweatherrain">
+
+                        </div>
+                        %
+                    </div>
+                    <div class="dva_prvky">
+                        Solar energy:<div id="dayweathersun">
+
+                        </div>
+                        W/m2
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <h2>Next 3 hours Forecast</h2>
+        <div class="graph_container">
+            <div id="curve_chart3label"></div>
+            <div id="curve_chart3"></div>
+            <div>
+                <li>A short-term production forecast based on the most accurate part of the weather forecast.</li>
+                <h3>Weather forecast</h3>
+                <div class="box_3">
+                    <div class="oneof3_box">
+                        <b>
+                            <div id="hours1">
+
+                            </div>
+                        </b>
+                        <div class="info_block1">
+                            <div class="info_left">Cloud coverage:</div><div class="info_right">@ViewBag.cloud31 %</div>
+                            <div class="info_left">Chance of rain:</div> <div class="info_right">@ViewBag.rain31 %</div>
+                            <div class="info_left">Solar energy:</div> <div class="info_right">@ViewBag.solar31 W/m2</div>
+                        </div>
+                        
+                    </div>
+                    <div class="oneof3_box">
+                        <b>
+                            <div id="hours2">
+
+                            </div>
+                        </b>
+                        <div class="info_block1">
+                            <div class="info_left">Cloud coverage:</div><div class="info_right">@ViewBag.cloud31 %</div>
+                            <div class="info_left">Chance of rain:</div> <div class="info_right">@ViewBag.rain31 %</div>
+                            <div class="info_left">Solar energy:</div> <div class="info_right">@ViewBag.solar31 W/m2</div>
+                        </div>
+</div>
+                    <div class="oneof3_box">
+                        <b>
+                            <div id="hours3">
+
+                            </div>
+                        </b>
+                        <div class="info_block1">
+                            <div class="info_left">Cloud coverage:</div><div class="info_right">@ViewBag.cloud31 %</div>
+                            <div class="info_left">Chance of rain:</div> <div class="info_right">@ViewBag.rain31 %</div>
+                            <div class="info_left">Solar energy:</div> <div class="info_right">@ViewBag.solar31 W/m2</div>
+                        </div>
+</div>
+                </div>
+  
+            </div>
+        </div>
+    </div>
+    <script>
+        countStav();
+    </script>
+</body>
+
+</html>

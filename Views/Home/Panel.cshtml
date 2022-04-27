@@ -1,0 +1,50 @@
+﻿
+@using BakalarskaPrace1.Models
+@model Panel
+    
+<h1>
+    Power plant properties:
+    <div class="tooltip">
+        Hover over me
+        <span class="tooltiptext">Tooltip text</span>
+    </div>
+</h1>
+    <div class="center">
+        <div class="panel_class">
+            @using (Html.BeginForm())
+            {
+                <br>
+                
+                <div class="form">
+
+                    <div class="form_leva">@Html.LabelFor(x => x.panel_tilt)</div>
+                    <div class="form_prava">@Html.TextBoxFor(x => x.panel_tilt) <b>( °)</b></div>
+                    <div class="tool">
+                        ?
+                        <span class="tooltext">Tilt of panels range(0,90)</span>
+                    </div>
+
+                    <div class="form_leva">@Html.LabelFor(x => x.panel_azimuth)</div>
+                    <div class="form_prava">@Html.TextBoxFor(x => x.panel_azimuth)<b> ( °)</b></div>
+                    <div class="tool">
+                        ?
+                        <span class="tooltext">Azimuth of panels 0 is on south range is (-180,180) </span>
+                    </div>
+
+                    <div class="form_leva">@Html.LabelFor(x => x.wattpeek)</div>
+                    <div class="form_prava">@Html.TextBoxFor(x => x.wattpeek)<b> (W)</b></div>
+                    <div class="tool">
+                        ?
+                        <span class="tooltext">Maximal power output by powerplant</span>
+                    </div>
+                </div>
+                <input type="hidden" value="@ViewBag.mesto" name="mesto" />
+                <input type="hidden" value="@ViewBag.iso" name="ISO" />
+                <input type="hidden" value="@ViewBag.latitude" name="latitude" />
+                <input type="hidden" value="@ViewBag.longitude" name="longitude" />
+                <br />
+                <button type="submit">Ukazat</button>
+            }
+        </div>
+    </div>
+

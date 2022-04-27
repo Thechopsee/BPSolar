@@ -1,0 +1,481 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-bran {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+  margin-right: 10%;
+}
+nav .navbar-nav li a{
+  color: #F9F871 !important;
+  }
+.navbar-bran
+{
+  color:#F9F871;
+}
+/* Provide sufficient contrast against white background */
+a {
+  color: #e5e5e5;
+}
+
+a:hover{
+  color: #e5e5e5 !important;
+  text-decoration: none !important;
+}
+.graph_comp {
+    margin-left: 8%;
+    margin-right: 8%;
+    min-height: 350px;
+}
+.text_poro {
+   margin-bottom:10%;
+}
+#top_banner {
+    color: #ffffff;
+    background-image: url("../galery/galery4.png");
+    background-size: 100%;
+    padding-bottom: 10%;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#top_banner_text {
+    color: #ffffff;
+    font-size: 150%;
+    padding-top: 15%;
+    text-align: center;
+    text-shadow: 1px 1px #000000;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+/*#303b4a;*/
+#menu {
+    background-color: #303b4a;
+    color: #F9F871;
+    margin-bottom: 0px !important;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background-color:#4c6281;
+ 
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  background-color:#e5e5e5;
+  color:#303b4a;
+  line-height: 60px; /* Vertically center the text there */
+}
+#date_container {
+    margin-bottom:2%;
+}
+#date_container button{
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: #303b4a;
+  border: none;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px;
+}
+
+.panel_class {
+  padding: 1%;
+  margin-left: 8%;
+  margin-right: 8%;
+  text-align: center;
+  background-color: #e5e5e5;
+  border-radius: 12px;
+}
+.Geolocation{
+    display:grid;
+    grid-template-rows: 0.5fr 1fr 1fr 0.5fr 1fr;
+    gap:2%;
+}
+#ukaz{
+    margin-top:15%;
+}
+#auto_vypln {
+    margin-top: 5%;
+}
+.form {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr 0.2fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1%;
+}
+.form2 {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr ;
+    gap: 1%;
+}
+.Warning1 {
+    color: white;
+    background-color: #f61147;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    margin-bottom:5%;
+    border-radius: 12px;
+    text-align: center;
+}
+
+    .Warning1:empty {
+        background-color: #e5e5e5
+    }
+.Warning2 {
+    color: white;
+    background-color: #f61147;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    margin-bottom: 5%;
+    border-radius: 12px;
+    text-align: center;
+}
+
+    .Warning2:empty {
+        background-color: #e5e5e5
+    }
+.form_leva{
+  text-align: right;
+}
+.form_prava{
+  text-align: left;
+}
+.spacer{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+    .panel_class form input {
+    margin-bottom:1%;
+    }
+button {
+    border-radius: 12px;
+    font-size: 16px;
+    background-color: #303b4a;
+    border: none;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px 32px;
+}
+.button {
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: #303b4a;
+  border: none;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 15px 32px;
+}
+
+h1 {
+    text-align:center;
+    color:white;
+}
+h2 {
+    text-align: center;
+    color: white;
+}
+
+#locationh {
+    display: flex;
+    justify-content: space-around;
+    padding: 1%;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+    background-color: #e5e5e5;
+    border-radius: 12px;
+    margin-top:1%;
+}
+#app {
+    display:flex;
+    justify-content:center;
+}
+.Api_deleni {
+    display:flex;
+    flex-direction:row;
+    gap:2%;
+    
+}
+#ApiLink {
+    width: 90%;
+}
+.Api_link_container
+{
+  width: 65%;
+  display:flex;
+  padding:1%;
+  background-color: #e5e5e5;
+  border-radius: 12px;
+  margin-top:1%;
+  margin-bottom:1%;
+}
+.Api_Json_Container
+{
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  background-color: #e5e5e5;
+  padding:1%;
+  border-radius: 12px;
+  margin-top:1%;
+  margin-bottom:1%;
+}
+#ang-app {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+#showbutton{
+    margin-left:17%;
+    margin-right:17%;
+}
+.center {
+    display: flex;
+    justify-content: center;
+}
+.columer{
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+}
+.columer iframe{
+  width: 100%;
+}
+.graph_container {
+    margin-top:2%;
+    margin-bottom:2%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding:1%;
+    background-color: #e5e5e5;
+    border-radius: 12px;
+}
+.hcomp {
+    text-align: center;
+    color: #e5e5e5;
+}
+.ul_text {
+    text-align:left;
+    
+    width:75%;
+}
+.box_3 {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2%;
+    margin-left:13%;
+    margin-right:13%;
+}
+.dva_prvky {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.oneof3_box {
+    text-align: center;
+    border-color: #303b4a;
+    border-width: 2px;
+    border-style: double;
+    border-radius:6px;
+}
+.info_block1 {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: grid;
+    grid-template-columns: 1fr 0.6fr;
+    gap: 2%;
+}
+
+#double_info_box {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+}
+.info_box {
+    text-align:center;
+    background-color: #e5e5e5;
+    border-radius: 12px;
+    padding-top:4%;
+}
+
+.info_block {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+}
+.info_left{
+    text-align:right;
+}
+.info_right {
+    text-align: left;
+}
+
+.text_container {
+  margin-top:2%;
+  margin-bottom:2%;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding:1%;
+  background-color: #e5e5e5;
+  border-radius: 12px;
+}
+
+#curve_chart {
+    width: 80%;
+    min-height: 400px;
+    margin-left: 10%;
+}
+#curve_chart2 {
+    width: 80%;
+    margin-left: 10%;
+    min-height: 400px;
+}
+#curve_chart3 {
+    width: 80%;
+    margin-left: 10%;
+    min-height: 400px;
+}
+
+.form_prava input
+{
+  width: 80%;
+}
+
+@media only screen and (hover:none) and (pointer:coarse){ 
+  .Api_deleni{
+    flex-direction:column;
+  }
+  .Api_link_container
+  {width: 100%;}
+  .spacer
+  {
+    flex-direction:column;
+  }
+  .form_prava input
+  {
+    width: 80%;
+  }
+}
+
+
+.Warning{
+  color:white;
+  background-color:#f61147;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  padding-top:1%;
+  border-radius: 12px;
+  text-align: center;
+}
+    .Warning:empty {
+        background-color: #e5e5e5
+    }
+button[disabled=disabled], button:disabled {
+    background-color: grey;
+    color: lightgray;
+}
+
+.tool {
+    position: relative;
+    display: inline-block;
+    text-align:left;
+}
+    .tool .tooltext {
+        display: none;
+        width: 120px;
+        background-color: #303b4a;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 105%;
+    }
+
+    .tool:hover .tooltext {
+       display:block;
+    }
+
+.po-najeti .uz {
+    display: none;
+    background: #fff;
+    color: #000
+}
+.uz {
+    display: none;
+}
+
+.po-najeti:hover .uz {
+    display: block;
+}
