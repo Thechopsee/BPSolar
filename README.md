@@ -4,9 +4,9 @@ Practical part of bachelor project Photovoltaic Power Plant Prediction of Produc
 ### Location configuration:
 The position is needed to correctly determine the weather forecast.
 1. Latitude and Longitude
-⋅⋅1. Manual Add
-⋅⋅2. Autofind using Geolocation API
-⋅⋅3. Use map to generate location
+  -Manual Add<br/>
+  -Autofind using Geolocation API<br/>
+  -Use map to generate location<br/>
 2. City name and state ISO
 ### Power plant configuration:
 Data that must be filled is:
