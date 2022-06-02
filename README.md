@@ -3,16 +3,16 @@ Practical part of bachelor project Photovoltaic Power Plant Prediction of Produc
 # Config power plant
 ### Location configuration:
 The position is needed to correctly determine the weather forecast.
-1. Latitude and Longitude
+1. Latitude and Longitude<br/>
   -Manual Add<br/>
   -Autofind using Geolocation API<br/>
   -Use map to generate location<br/>
 2. City name and state ISO
 ### Power plant configuration:
-Data that must be filled is:
-1.Panel orientation(-180°-180°)
-2.Panel tilt(0°-180°)
-3.Maximal power output of power plant(W/h)
+Data that must be filled is:<br/>
+1.Panel orientation(-180°-180°)<br/>
+2.Panel tilt(0°-180°)<br/>
+3.Maximal power output of power plant(W/h)<br/>
 ![alt text](https://github.com/Thechopsee/BPSolar/blob/main/img/Location.png?raw=true)
 # Visualization
 ![alt text](https://github.com/Thechopsee/BPSolar/blob/main/img/Visualization.png?raw=true)
