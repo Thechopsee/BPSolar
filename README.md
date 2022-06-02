@@ -10,9 +10,9 @@ The position is needed to correctly determine the weather forecast.
 2. City name and state ISO
 ### Power plant configuration:
 Data that must be filled is:<br/>
-1.Panel orientation(-180°-180°)<br/>
-2.Panel tilt(0°-180°)<br/>
-3.Maximal power output of power plant(W/h)<br/>
+1. Panel orientation(-180°-180°)<br/>
+2. Panel tilt(0°-180°)<br/>
+3. Maximal power output of power plant(W/h)<br/>
 ![alt text](https://github.com/Thechopsee/BPSolar/blob/main/img/Location.png?raw=true)
 # Visualization
 Visualitation of forecast is separed into tree timezones and this is for following 3hour,7days or 7days hour by hour.<br>
